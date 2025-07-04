@@ -71,3 +71,10 @@ label {
     margin-bottom: 7px;
     font-weight: bold;
 }
+
+.pata {
+    display: flex;
+    width: 70px;
+    border-radius: 15%;
+    background-color: #006663;
+}

@@ -14,7 +14,7 @@
         <form id="registro-form" action="index.php?controller=controlCita&method=guardar" method="POST">
             <section class="form_registro">
                 <div class="form_header">
-                    <img src="resources/images/calendar.png" alt="calendar" class="calendar">
+                    <img src="Resources/images/pata.png" alt="pata" class="pata">
                     <h2>Registro de Citas</h2>
                 </div>
 
