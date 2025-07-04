@@ -1,0 +1,1 @@
+Adding debugging statements and error handling in the generarReportePorLetra method.

@@ -1,0 +1,16 @@
+**Introducción al Manual de Usuario**  
+
+
+Este programa es una aplicación web diseñada para gestionar diversos aspectos relacionados con la atención y el cuidado de mascotas. Utilizando un enfoque basado en el patrón de diseño Modelo-Vista-Controlador (MVC), la aplicación permite a los usuarios interactuar con diferentes módulos, incluyendo la gestión de clientes, empleados, especies, exámenes, mascotas, productos y servicios.
+
+La interfaz de usuario es intuitiva y accesible, facilitando la navegación a través de las distintas funcionalidades. Los usuarios pueden realizar tareas como registrar nuevas mascotas, programar exámenes, y gestionar información de clientes y proveedores. Además, la aplicación está equipada con capacidades para generar informes y documentos en formato PDF, mejorando la eficiencia en la gestión de datos.
+
+**Requisitos para Usar el Programa**
+
+Para utilizar este programa de manera adecuada, se requieren los siguientes requisitos:
+
+1. Un servidor web (por ejemplo, Apache o Nginx).
+2. PHP instalado en el servidor.
+3. Un servidor de base de datos MySQL en ejecución localmente.
+4. La base de datos `clinivet` creada en MySQL.
+5. Permisos adecuados para el usuario de la base de datos.

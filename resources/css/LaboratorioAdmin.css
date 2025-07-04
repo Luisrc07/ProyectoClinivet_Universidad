@@ -1,0 +1,118 @@
+body{
+    background-color:teal
+}
+.contenedor_titulo{
+    font-family: Arial, sans-serif;
+    display: flex;
+    text-align: center;
+    background-color: #006663;
+    width: 90%;
+    height: 80px;
+    color: aliceblue;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    border-radius: 20px;
+}
+
+.btn_agregar{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #28a745; /* Color verde */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn_agregar:hover {
+    background-color: #218838; /* Color verde aclarado */
+}
+
+.col{
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    
+}
+
+.contenido{
+    background-color: #acceae;
+}
+
+.encabezado{
+    background-color: #006663;
+    color: aliceblue;
+    padding: 10px;
+    
+}
+
+/* Estilos para el botón de eliminar */
+.btn_eliminar a {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #d9534f; /* Color rojo */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease; /* Suaviza la transición de color */
+}
+
+/* Efecto hover para aclarar el color */
+.btn_eliminar a:hover {
+    background-color: #c9302c; /* Color rojo aclarado */
+}
+
+/* Estilos para el botón de modificar */
+.btn_modificar a {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #28a745; /* Color verde */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease; /* Suaviza la transición de color */
+}
+
+/* Efecto hover para aclarar el color */
+.btn_modificar a:hover {
+    background-color: #218838; /* Color verde aclarado */
+}
+
+.btn_home {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #d9534f; /* Color rojo */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+  
+    margin-left: 10px;
+    transition: background-color 0.3s ease; /* Suaviza la transición de color */
+}
+
+/* Efecto hover para aclarar el color */
+.btn_home:hover {
+    background-color: #c9302c; /* Color rojo aclarado */
+}
+
+.btnagregar{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

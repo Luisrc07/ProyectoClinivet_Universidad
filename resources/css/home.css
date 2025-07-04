@@ -1,0 +1,175 @@
+body {
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #c49d7d;
+}
+.no_pointer {
+    cursor: default;
+}
+.header {
+    margin-top: 10px;
+    margin-left: 3%;
+    margin-right: 5%;
+    background-color: #006663;
+    color: white;
+    padding: 20px;
+    width: 40%;
+    border-radius: 20px;
+    box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
+}
+.stuff {
+    display: flex;
+    padding: 0%;
+    margin-top: 40px;
+    margin-left: 10px;
+    justify-content: space-between;
+}
+.contenido, .ingresar {
+    text-align: center;
+    justify-content: center;
+    width: 20%;
+    padding: 1%;
+    background-color: #006663;
+    border-radius: 8%;
+    box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
+    margin-left: 0; /* Ajusta la posición más a la izquierda */
+}
+h1 {
+    color: #FF6B1A;
+}
+.contenedor_marca {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-left: 3%;
+    background-color: #006663;
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
+}
+.bloque_opciones {
+    display: flex;
+    justify-content: center;
+}
+.pata {
+    width: 70px;
+}
+.contenedor_imagen {
+    display: flex;
+    align-items: center;
+}
+.con_op {
+    display: flex;
+    justify-content: center;
+}
+.logo_petpulse {
+    width: 70px; /* Ajusta el tamaño de la imagen según sea necesario */
+    margin-right: 0px;
+    border-radius: 15%;
+}
+.opciones {
+    display: flex;
+    margin-left: auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.opc_nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    /*margin-right: 90px;*/
+}
+.opc_nav > li {
+    position: relative;
+}
+.opc_nav > li > a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+}
+.opc_nav > li > a:hover {
+    background-color: #00B3AD;
+    border-radius: 10%;
+    transition: background-color 0.8s ease;
+}
+.opc_nav ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #006663;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    min-width: 150px;
+    z-index: 1;
+}
+.opc_nav ul li a {
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+.opc_nav ul li a:hover {
+    background-color: #00B3AD;
+    border-radius: 10%;
+}
+.opc_nav > li:hover ul {
+    display: block;
+    border-radius: 10%;
+}
+main {
+    padding: 20px;
+}
+.bienvenida {
+    font-size: 24px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #FF6B1A;
+    margin-top: 0px;
+}
+.parr_bienv {
+    font-size: 16px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: justify;
+    color: white;
+}
+/* Mejoras para la sección de Iniciar sesión */
+.ingresar {
+    width: 20%; /* Ajusta el ancho para que sea similar */
+    padding: 1%; /* Padding para el contenido */
+    background-color: #006663; /* Mantiene el color de fondo original */
+    border-radius: 8%; /* Mantiene el radio original */
+    box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2); /* Mantiene la sombra */
+    margin-left: 0; /* Ajusta la posición más a la izquierda */
+}
+.ingresar .input {
+    width: 90%; /* Aumenta el ancho de las cajas de texto */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ffffff; /* Cambia el color del borde */
+    border-radius: 5px;
+}
+.ingresar input[type="submit"] {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #FF6B1A; /* Color de fondo */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.ingresar input[type="submit"]:hover {
+    background-color: #e65c00; /* Color de fondo al pasar el cursor */
+}
