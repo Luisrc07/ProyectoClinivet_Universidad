@@ -29,10 +29,10 @@
                         </li>
                         <li class="cl_mas"> <a href="./views/servicioPeluqueria.php">Peluquería</a> </li>
                         <li class="cl_lab"> <a class="no_pointer">Laboratorio</a>
-                            <ul>
-                            <li class="consultas"><a href="views/servicioLaboratorio.php">Exámenes</a></li>                         
-                            </ul>
-                        </li>
+                                <ul>
+                                    <li class="consultas"><a href="index.php?controller=controlExamen&method=mostrarServicios">Exámenes</a></li>
+                                </ul>
+                            </li>
                         <li class="cl_pro"><a class="no_pointer">Productos</a> </li>
                     </ul>
                 </div>

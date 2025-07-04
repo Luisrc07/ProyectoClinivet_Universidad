@@ -22,7 +22,15 @@ class controlExamen {
         }
     }
 
-
+    public function mostrarServicios() {
+        try {
+            $examenes = $this->MODEL->listar();
+           
+            include_once 'views/servicioLaboratorio.php';
+        } catch (Exception $e) {
+            echo "Error al cargar los servicios: " . $e->getMessage();
+        }
+    }
 
 
 

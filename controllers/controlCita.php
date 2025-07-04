@@ -22,6 +22,8 @@ class controlCita {
         include_once 'views/listaCita.php'; 
     }
 
+
+
     public function nuevo() {
         $mascotas = $this->MODEL_MASCOTA->listar(); 
         $empleados = $this->MODEL_EMPLEADO->listar(); 
