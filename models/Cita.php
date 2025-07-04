@@ -1,106 +1,123 @@
 <?php
 class Cita {
-    private $Id_Cita;
-    private $Id_Tipo_Servicio;
-    private $Id_Mascota;
-    private $Id_Empleado;
-    private $Fecha_cita_actual;
-    private $Fecha_Proxima_cita;
-    private $CNX;
+    private $idCita;
+    private $idTipoServicio;
+    private $idMascota;
+    private $idEmpleado;
+    private $fechaCitaActual;
+    private $fechaProximaCita;
+    private $connect;
 
     // Métodos para acceder y modificar los atributos
-    public function getIdCita() { return $this->Id_Cita; }
-    public function setIdCita($Id_Cita) { $this->Id_Cita = $Id_Cita; }
+    public function getIdCita() { return $this->idCita; }
+    public function setIdCita($idCita) { $this->idCita = $idCita; }
 
-    public function getIdTipoServicio() { return $this->Id_Tipo_Servicio; }
-    public function setIdTipoServicio($Id_Tipo_Servicio) { $this->Id_Tipo_Servicio = $Id_Tipo_Servicio; }
+    public function getIdTipoServicio() { return $this->idTipoServicio; }
+    public function setIdTipoServicio($idTipoServicio) { $this->idTipoServicio = $idTipoServicio; }
 
-    public function getIdMascota() { return $this->Id_Mascota; }
-    public function setIdMascota($Id_Mascota) { $this->Id_Mascota = $Id_Mascota; }
+    public function getIdMascota() { return $this->idMascota; }
+    public function setIdMascota($idMascota) { $this->idMascota = $idMascota; }
 
-    public function getIdEmpleado() { return $this->Id_Empleado; }
-    public function setIdEmpleado($Id_Empleado) { $this->Id_Empleado = $Id_Empleado; }
+    public function getIdEmpleado() { return $this->idEmpleado; }
+    public function setIdEmpleado($idEmpleado) { $this->idEmpleado = $idEmpleado; }
 
-    public function getFechacitaActual() { return $this->Fecha_cita_actual; }
-    public function setFechacitaActual($Fecha_cita_actual) { $this->Fecha_cita_actual = $Fecha_cita_actual; }
+    public function getFechaCitaActual() { return $this->fechaCitaActual; }
+    public function setFechaCitaActual($fechaCitaActual) { $this->fechaCitaActual = $fechaCitaActual; }
 
-    public function getFechaProximacita() { return $this->Fecha_Proxima_cita; }
-    public function setFechaProximacita($Fecha_Proxima_cita) { $this->Fecha_Proxima_cita = $Fecha_Proxima_cita; }
-
-    public function __construct(){
+    public function getFechaProximaCita() { return $this->fechaProximaCita; }
+    public function setFechaProximaCita($fechaProximaCita) { $this->fechaProximaCita = $fechaProximaCita; }
+    public function __construct() {
         try {
-            $this->CNX = conexion::conectar();
-        } catch (Exception $e){
-            die($e->getMessage());
-        }
-    }
-
-    /**
-     * Listar todas las citas.
-     * @return array
-     */
-    public function listar(): array {
-        try {
-            $query = "SELECT * FROM cita";
-            $resultado = $this->CNX->prepare($query);
-            $resultado->execute();
-            return $resultado->fetchAll(PDO::FETCH_OBJ);
+            $this->connect = conexion::conectar();
         } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
-    /**
-     * Cargar una cita por su ID.
-     * @param int $id
-     * @return object
-     */
-    public function cargarID(int $id): object {
+    // Método para listar todas las citas
+    public function listar(): array {
+        try {
+            $query = "
+                SELECT 
+                    c.Id_Cita,
+                    c.Id_Tipo_Servicio,
+                    c.Id_Mascota,
+                    c.Id_Empleado,
+                    c.Fecha_cita_actual,
+                    c.Fecha_Proxima_cita,
+                    mas.Nombre_Mascota AS Nombre_Mascota,
+                    emp.Nombres AS Nombre_Empleado,
+                    serv.Nombre_Servicio AS Nombre_Tipo_Servicio
+                FROM 
+                    cita c
+                LEFT JOIN 
+                    mascota mas ON c.Id_Mascota = mas.Id_Mascota
+                LEFT JOIN 
+                    empleado emp ON c.Id_Empleado = emp.Id_Empleado
+                LEFT JOIN 
+                    servicio serv ON c.Id_Tipo_Servicio = serv.Id_Tipo_Servicio
+                ORDER BY 
+                    c.Id_Cita";
+                    
+            $resultado = $this->connect->prepare($query);
+            $resultado->execute();
+            return $resultado->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die("Error al listar citas: " . $e->getMessage());
+        }
+    }
+
+    // Método para obtener una cita por ID
+    public function cargarID($id) {
         try {
             $query = "SELECT * FROM cita WHERE Id_Cita = ?";
-            $resultado = $this->CNX->prepare($query);
-            $resultado->execute([$id]);
+            $resultado = $this->connect->prepare($query);
+            $resultado->execute(array($id));
             return $resultado->fetch(PDO::FETCH_OBJ);
         } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
-    /**
-     * Registrar una nueva cita.
-     * @param object $data
-     */
-    public function registrar(object $data): void {
+    // Método para registrar una nueva cita
+    public function registrar($data) {
         try {
-            $query = "INSERT INTO cita (Id_Tipo_Servicio, Id_Mascota, Id_Empleado, Fecha_cita_actual, Fecha_Proxima_cita) VALUES (?, ?, ?, ?, ?)";
-            $this->CNX->prepare($query)->execute([$data->Id_Tipo_Servicio, $data->Id_Mascota, $data->Id_Empleado, $data->Fecha_cita_actual, $data->Fecha_Proxima_cita]);
+            $query = "INSERT INTO cita (Id_Tipo_Servicio, Id_Mascota, Id_Empleado, Fecha_cita_actual, Fecha_Proxima_Cita) VALUES (?, ?, ?, ?, ?)";
+            $this->connect->prepare($query)->execute([
+            $data->getIdTipoServicio(),
+            $data->getIdMascota(),
+            $data->getIdEmpleado(),
+            $data->getFechaCitaActual(),
+            $data->getFechaProximaCita()
+            ]);
         } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
-    /**
-     * Actualizar los datos de una cita.
-     * @param object $data
-     */
-    public function actualizarDatos(object $data): void {
+    // Método para actualizar datos de una cita
+    public function actualizarDatos($data) {
         try {
-            $query = "UPDATE cita SET Id_Tipo_Servicio = ?, Id_Mascota = ?, Id_Empleado = ?, Fecha_cita_actual = ?, Fecha_Proxima_cita = ? WHERE Id_Cita = ?";
-            $this->CNX->prepare($query)->execute([$data->Id_Tipo_Servicio, $data->Id_Mascota, $data->Id_Empleado, $data->Fecha_cita_actual, $data->Fecha_Proxima_cita, $data->Id_Cita]);
+            $query = "UPDATE cita SET Id_Tipo_Servicio = ?, Id_Mascota = ?, Id_Empleado = ?, Fecha_cita_actual = ?, Fecha_Proxima_Cita = ? WHERE Id_Cita = ?";
+            $this->connect->prepare($query)->execute(array(
+                $data->getIdTipoServicio(),
+                $data->getIdMascota(),
+                $data->getIdEmpleado(),
+                $data->getFechaCitaActual(),
+                $data->getFechaProximaCita(),
+                $data->getIdCita()
+            ));
         } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
-    /**
-     * Eliminar una cita por su ID.
-     * @param int $id
-     */
-    public function delete(int $id): void {
+    // Método para eliminar una cita
+    public function delete($id) {
         try {
             $query = "DELETE FROM cita WHERE Id_Cita = ?";
-            $resultado = $this->CNX->prepare($query);
-            $resultado->execute([$id]);
+            $resultado = $this->connect->prepare($query);
+            $resultado->execute(array($id));
         } catch (Exception $e) {
             die($e->getMessage());
         }

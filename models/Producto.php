@@ -38,10 +38,6 @@ class Producto {
     // Método para listar todos los productos
     public function listar(): array {
         try {
-            // Modificamos la consulta para incluir el JOIN con la tabla 'proveedor'
-            // y seleccionar el 'Nombre_Proveedor' de esa tabla.
-            // Usamos un alias 'prov' para la tabla proveedor y 'p' para producto
-            // Seleccionamos Nombre_Proveedor como Nombre_Proveedor_Producto_Lista para evitar conflictos
             $query = "
                 SELECT 
                     p.Id_Producto,

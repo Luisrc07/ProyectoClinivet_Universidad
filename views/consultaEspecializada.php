@@ -53,6 +53,9 @@
         </section>
     </main>
 
+        <footer>
+        <p>&copy; 2023 Clínica Veterinaria. Todos los derechos reservados.</p>
+    </footer>
     
 </body>
 </html>

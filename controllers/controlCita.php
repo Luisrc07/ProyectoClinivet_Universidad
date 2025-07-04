@@ -1,117 +1,91 @@
 <?php
-include_once 'models/Cita.php'; 
-include_once 'models/CatalogoServicio.php';
-include_once 'models/Mascota.php';
-include_once 'models/Empleado.php';
-include_once 'models/Cliente.php'; // Incluir modelo Cliente para obtener nombres de clientes en la lista de Citas
+include_once 'models/Cita.php';
+include_once 'models/Mascota.php'; // Necesario para MODEL_MASCOTA
+include_once 'models/Empleado.php'; // Necesario para MODEL_EMPLEADO
+include_once 'models/CatalogoServicio.php'; // Necesario para MODEL_TIPO_SERVICIO
 
-class ControlCita {
-
-    public $MODEL;
-    public $Servicio_MODEL;
-    public $Mascota_MODEL;
-    public $Empleado_MODEL;
-    public $Cliente_MODEL; // Agregado modelo Cliente
+class controlCita {
+    public $MODEL; 
+    public $MODEL_MASCOTA;
+    public $MODEL_EMPLEADO;
+    public $MODEL_TIPO_SERVICIO;
 
     public function __construct() {
         $this->MODEL = new Cita();
-        $this->Servicio_MODEL = new CatalogoServicio();
-        $this->Mascota_MODEL = new Mascota();
-        $this->Empleado_MODEL = new Empleado();
-        $this->Cliente_MODEL = new Cliente(); // Inicializar modelo Cliente
+        $this->MODEL_MASCOTA = new Mascota();
+        $this->MODEL_EMPLEADO = new Empleado();
+        $this->MODEL_TIPO_SERVICIO = new CatalogoServicio();
     }
 
     public function home() {
-        // Obtener todas las citas para mostrar en la lista
-        $citas = $this->MODEL->listar();
-        include_once 'views/listaCita.php';
+        $citas = $this->MODEL->listar(); 
+        include_once 'views/listaCita.php'; 
     }
 
     public function nuevo() {
-        $cita = new Cita(); // Crear un nuevo objeto Cita para el formulario
-        $tiposServicio = $this->Servicio_MODEL->listar(); // Obtener todos los tipos de servicio
-        $mascotas = $this->Mascota_MODEL->listar(); // Obtener todas las mascotas
-        $empleados = $this->Empleado_MODEL->listar(); // Obtener todos los empleados
-
-        // Si se pasa un ID, significa que estamos editando una cita existente
+        $mascotas = $this->MODEL_MASCOTA->listar(); 
+        $empleados = $this->MODEL_EMPLEADO->listar(); 
+        $servicios = $this->MODEL_TIPO_SERVICIO->listar(); 
+        
+        $cita = null; // Inicializamos $cita para el caso de nuevo registro
         if (isset($_REQUEST['id'])) {
             $cita = $this->MODEL->cargarID($_REQUEST['id']);
         }
-        include_once 'views/registroCita.php'; // Esta vista debe ser creada
+        
+        // Ahora, la vista registroCita.php tendrá acceso a $mascotas, $empleados y $servicios
+        include_once 'views/registroCita.php'; 
     }
 
     public function guardar() {
         session_start();
         $cita = new Cita();
-        $response = array();
+        
+
+         // Asignar ID si está presente (para actualizaciones)
+        if (isset($_POST['idCita']) && !empty($_POST['idCita'])) {
+            $cita->setIdCita((int)$_POST['idCita']); // Convertir a int
+        }
 
         // Validar campos obligatorios
-        if (empty($_POST['idTipoServicio']) || empty($_POST['idMascota']) || empty($_POST['idEmpleado']) || empty($_POST['fechaCitaActual'])) {
-            $response['error'] = "Todos los campos obligatorios deben ser completados.";
-            echo json_encode($response);
+        if (empty($_POST['Id_Tipo_Servicio']) || empty($_POST['Id_Mascota']) || empty($_POST['Id_Empleado']) || empty($_POST['Fecha_cita_actual'])) {
+            echo json_encode(['error' => 'Todos los campos son obligatorios.']);
             return;
         }
-
-        // Asignar valores desde los datos POST
-        $cita->setIdTipoServicio($_POST['idTipoServicio']);
-        $cita->setIdMascota($_POST['idMascota']);
-        $cita->setIdEmpleado($_POST['idEmpleado']);
-        $cita->setFechaCitaActual($_POST['fechaCitaActual']);
-        $cita->setFechaProximaCita(isset($_POST['fechaProximaCita']) && !empty($_POST['fechaProximaCita']) ? $_POST['fechaProximaCita'] : null);
-
-        // Guardar o actualizar
-        if (isset($_POST['idCita']) && !empty($_POST['idCita'])) {
-            $cita->setIdCita($_POST['idCita']);
-            $this->MODEL->actualizarDatos($cita);
-            $response['success'] = "Cita modificada correctamente.";
-        } else {
-            $this->MODEL->registrar($cita);
-            $response['success'] = "Cita registrada correctamente.";
-        }
-
-        $response['redirect'] = "index.php?controller=controlCita&method=home";
-        echo json_encode($response);
-        exit;
-    }
-
-    public function editar() {
-        if (isset($_REQUEST['id'])) {
-            $cita = $this->MODEL->cargarID($_REQUEST['id']);
-            $tiposServicio = $this->Servicio_MODEL->listar();
-            $mascotas = $this->Mascota_MODEL->listar();
-            $empleados = $this->Empleado_MODEL->listar();
-            include_once 'views/registroCita.php';
-        } else {
-            header("Location: ?controller=controlCita&method=home");
+    
+        // Asignar valores
+        $cita->setIdTipoServicio((int)$_POST['Id_Tipo_Servicio']); // Convertir a int
+        $cita->setIdMascota((int)$_POST['Id_Mascota']); // Convertir a int
+        $cita->setIdEmpleado((int)$_POST['Id_Empleado']); // Convertir a int
+        $cita->setFechaCitaActual($_POST['Fecha_cita_actual']);
+        $cita->setFechaProximaCita(isset($_POST['Fecha_Proxima_Cita']) ? $_POST['Fecha_Proxima_Cita'] : null);
+    
+       
+    
+        try {
+            // Decidir si registrar o actualizar basado en si el ID de la cita está establecido en el objeto
+            if (empty($cita->getIdCita())) {
+                $this->MODEL->registrar($cita);
+                echo "Cita registrada exitosamente.";
+            } else {
+                $this->MODEL->actualizarDatos($cita);
+                echo "Cita actualizada exitosamente.";
+            }
+    
+            header('Location: index.php?controller=controlCita&method=home');
+            exit();
+        } catch (Exception $e) {
+            echo "Error al guardar la cita: " . $e->getMessage();
         }
     }
 
     public function eliminar() {
         if (isset($_REQUEST['id'])) {
             $this->MODEL->delete($_REQUEST['id']);
-            header("Location: ?controller=controlCita&method=home");
+            header('Location: index.php?controller=controlCita&method=home');
+            exit(); // Es buena práctica usar exit() después de un header Location
         } else {
-            header("Location: ?controller=controlCita&method=home");
+            echo "Error: ID no proporcionado para eliminar.";
         }
     }
 }
-?>
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
 ?>

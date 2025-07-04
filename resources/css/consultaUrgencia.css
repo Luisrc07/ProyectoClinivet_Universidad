@@ -138,12 +138,11 @@ section {
 footer {
     text-align: center;
     padding: 10px 0;
-    background: #1e88e5;
+    background: #006663;
     color: white;
-    position: relative;
+    position: absolute;
     bottom: 0;
     width: 100%;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 
